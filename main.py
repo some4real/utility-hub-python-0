@@ -20,27 +20,68 @@ def accPass():
     print("whoo-hoo! Password successful created!")
     print("Your username is " + str(userName))
     print("Your password is " + createPass)
+
+
+def is_number(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+
 def calculator():
-    print("Welcome to Calculator")
-    num1 = input("Enter first number: ")
-    num2 = input("Enter second number: ")
-    while num1 not in map(str, range(10)) or num2 not in map(str, range(10)):
-        print("Invalid entry. Must be 0-9")
-        num1 = (input("Enter first number: "))
-        num2 = (input("Enter second number: "))
+    while True:
+        print("Simple Calculator")
+
+        while True:
+            num1 = input("Enter first number: ")
+            if not is_number(num1):
+                print("Invalid entry. Must be a number.")
+                continue
+            else:
+                num1 = float(num1)
+                break
+        while True:
+            num2 = input("Enter second number: ")
+            if not is_number(num2):
+                print("Invalid entry. Must be a number.")
+            else:
+                num2 = float(num2)  # Convert the valid input to a float
+                break
+        while True:
+            t = False
+            sign = input("Enter add, subtract, multiply or divide: ")
+
+            if sign.lower() == "add":
+                print(num1 + num2)
+                break
+            elif sign.lower() == "subtract":
+                print(num1 - num2)
+                break
+            elif sign.lower() == "multiply":
+                print(num1 * num2)
+                break
+            elif sign.lower() == "divide":
+                if num2 != 0:
+                    print(num1 / num2)
+                    break
+                else:
+                    print("Cannot divide by zero.")
+
+        another_operation = input("Do you want to perform another operation? (yes/no): ")
+        if another_operation.lower() != "yes":
+            print(main_menu)
+            choice = input("Enter 1 to use ToDoList or 2 to use Calculator: ")
+            if choice == "1":
+                toDoList()
+            elif choice == "2":
+                continue
+            else:
+                print("Invalid choice. Exiting.")
+                break
 
 
-        sign = input("Enter add, subtract, multiply or divide: ")
-        if sign == "add":
-            print(num1 + num2)
-        elif sign == "subtract":
-            print (num1 - num2)
-        elif sign == "multiply":
-            print (num1 * num2)
-        elif sign == "divide":
-            print(num1 / num2)
-        else:
-            print("Invalid input")
 
 def toDoList():
     welcomeMsg = "Welcome, you have chosen ToDoList\n"
@@ -84,6 +125,7 @@ def toDoList():
                     print("You have successfully removed " + taskRemove)
         elif menu == "4" or menu == "exit":
             print("You have exited the app\nSee you next time!")
+            print(main_menu)
             break
         else:
             print("Invalid input")
@@ -93,9 +135,8 @@ def toDoList():
 userName = personal_account()
 createPass = accPass()
 
-
-print("What would you like to do today?")
-print("1. ToDoList\n2. Calculator")
+main_menu = "What would you like to do today?\n1. ToDoList\n2. Calculator"
+print(main_menu)
 choice = input("Enter 1 to use ToDoList or 2 to use Calculator: ")
 if choice == "1":
     toDoList()
